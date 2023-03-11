@@ -1,6 +1,8 @@
 import string
 import os
-from PIL import ImageFont, ImageDraw, Image
+from PIL import ImageFont, ImageDraw, Image, ImageChops
+from numpy import sum as np_sum
+from progress.bar import Bar
 from project_config import CHARACTERS as characters, IMAGE_SIZE as img_size
 
 # path = os.getcwd()+"fonts-main\\"
@@ -20,14 +22,14 @@ def get_fonts_list():
 
 # make sure this isn't run when folders already exists
 def make_char_dirs():
-    global characters
+    characters = list(string.ascii_letters+string.digits)
     for i in characters:
         if i in string.ascii_lowercase:
-            os.makedirs(f".\dataset_new\{i}L")
+            os.makedirs(f".\dataset\{i}_L")
         elif i in string.ascii_uppercase:
-            os.makedirs(f".\dataset_new\{i}H")            
+            os.makedirs(f".\dataset\{i}_U")            
         else:
-            os.makedirs(f".\dataset_new\{i}")
+            os.makedirs(f".\dataset\{i}")
 
 def predict_font_size(font_path,character):
     global img_size
@@ -52,33 +54,62 @@ def predict_font_size(font_path,character):
     # img.save(f"./test/{character}.png")
     return font_size-3
 
+
+# Get MSE between 2 images
+def mse(img1,img2):
+    # print(np_sum(ImageChops.difference(img1,img2)))
+    if abs(np_sum(ImageChops.difference(img1,img2)))==0:
+        return True
+    else: return False
+
 def generate_image():
     global characters
     f = open("generator.txt","r")
     fonts = f.read().split("\n")[:-1]
     f.close()
-    for font in fonts[:20]:
-        # accessing font name from font be like:
-        # print((font.split("\\")[-1]).split(".ttf")[0])
-        font_name = (font.split("\\")[-1]).split(".ttf")[0]
-
-        for i in characters:
-            font_used = ImageFont.truetype(font,predict_font_size(font,i))
-            image = Image.new(mode='RGB',size=img_size,color="#FFFFFF")
-            draw = ImageDraw.Draw(im=image)
-            draw.text((0,0),i,font=font_used,fill="black")
-            if i in string.ascii_lowercase:
-                image.save(f"dataset_new/{i}L/{font_name}.png")
-            elif i in string.ascii_uppercase:
-                image.save(f"dataset_new/{i}H/{font_name}.png")
-            else:
-                image.save(f"dataset_new/{i}/{font_name}.png")
+    val = 1
+    with Bar("Generating...",max=len(fonts)) as bar:
+        for font in fonts:
+            # accessing font name from font be like:
+            # print((font.split("\\")[-1]).split(".ttf")[0])
+            try:
+                font_name = (font.split("\\")[-1]).split(".ttf")[0]
+                for i in characters:
+                    if i in string.ascii_uppercase:
+                        font_used = ImageFont.truetype(font,predict_font_size(font,i))
+                        img1u = Image.new(mode='RGB',size=img_size,color="#FFFFFF")
+                        draw = ImageDraw.Draw(im=img1u)
+                        draw.text((0,0),i,font=font_used,fill="black")
+                        img2l = Image.new(mode='RGB',size=img_size,color="#FFFFFF")
+                        draw = ImageDraw.Draw(im=img2l)
+                        draw.text((0,0),i.lower(),font=font_used,fill="black")
+                        if mse(img1u,img2l):
+                            img1u.save(f"dataset/{i.upper()}_U/{i.upper()}_U_{val}.png")
+                        else:
+                            img1u.save(f"dataset/{i}_U/{i}_U_{val}.png")
+                            img2l.save(f"dataset/{i}_L/{i}_L_{val}.png")
+                    else:
+                        img = Image.new(mode='RGB',size=img_size,color="#FFFFFF")
+                        draw = ImageDraw.Draw(im=img)
+                        draw.text((0,0),i,font=font_used,fill="black")
+                        img.save(f"dataset/{i}/{val}.png")
+            except KeyboardInterrupt:
+                print("exiting")
+                exit(1)
+            except:
+                print("err")
+                pass
+            val+=1
+            bar.next()
+        
 
 # Run this to generate the fonts available
 # get_fonts_list()
+print("Fonts vanthachu da!")
 
 # Run this to make directories
-# make_char_dirs()
+make_char_dirs()
+print("Dirs panniyachu da!")
 
 # Run this to generate images
 generate_image()
