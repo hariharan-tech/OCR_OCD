@@ -47,4 +47,4 @@ Two different versions of the model were developed, the former implemented a Dou
 
 ## Future scope
 
-To digitalize printed media content such as documents, magazines and newspapers using optical character recognition. These digitalized documents can be used in wide applications such as text to speech conversion (TTS), digitalizing data records.
+Digitalizing printed media content such as documents, magazines and newspapers using optical character recognition. These digitalized documents can be used in wide applications such as text to speech conversion (TTS), digitalizing data records.
