@@ -4,13 +4,13 @@ Optical character recognition for printed text media allows for proper digitaliz
 
 ## Flowchart of OCR system
 
-![Flowchart](https://github.com/hariharan-tech/OCR_OCD/blob/master/img/flowchart.png)
+![Flowchart](https://raw.githubusercontent.com/hariharan-tech/OCR_OCD/master/img/flowchart.png)
 
 ## CNN model Implementation
 
 A convolutional neural network with three stages of two consecutive convolutional blocks and a max pooling layer each which is then followed by a dense layer that terminated with a softmax activation function was developed.
 
-![Model implementation](https://github.com/hariharan-tech/OCR_OCD/blob/master/img/model_img.png)
+![Model implementation](https://raw.githubusercontent.com/hariharan-tech/OCR_OCD/master/img/model_img.png)
 
 ### Image pre-processing
 
@@ -22,15 +22,15 @@ A new dataset for printed characters were generated using all the fonts which ar
 
 Dataset can be viewed at: [Kaggle - OCR_Dataset](https://www.kaggle.com/datasets/harieh/ocr-dataset)
 
-![Dataset sample image](https://github.com/hariharan-tech/OCR_OCD/blob/master/img/sample_data.png)
+![Dataset sample image](https://raw.githubusercontent.com/hariharan-tech/OCR_OCD/master/img/sample_data.png)
 
 ## CNN Model Results
 
-![Accuracy plot](https://github.com/hariharan-tech/OCR_OCD/blob/master/img/acc_plot.png)
+![Accuracy plot](https://raw.githubusercontent.com/hariharan-tech/OCR_OCD/master/img/acc_plot.png)
 
-![Loss plot](https://github.com/hariharan-tech/OCR_OCD/blob/master/img/loss_plot.png)
+![Loss plot](https://raw.githubusercontent.com/hariharan-tech/OCR_OCD/master/img/loss_plot.png)
 
-![Confusion Matrix](https://github.com/hariharan-tech/OCR_OCD/blob/master/img/conf_matrix.png)
+![Confusion Matrix](https://raw.githubusercontent.com/hariharan-tech/OCR_OCD/master/img/conf_matrix.png)
 
 Two different versions of the model were developed, the former implemented a Double stage CNN with Max Pooling and the latter implemented Single stage CNN with Average Pooling.
 
@@ -41,9 +41,9 @@ Two different versions of the model were developed, the former implemented a Dou
 
 ## Realtime execution on sample data
 
-![Implementation Image 1](https://github.com/hariharan-tech/OCR_OCD/blob/master/img/imp1.png)
+![Implementation Image 1](https://raw.githubusercontent.com/hariharan-tech/OCR_OCD/master/img/imp1.png)
 
-![Implementation Image 2](https://github.com/hariharan-tech/OCR_OCD/blob/master/img/imp2.png)
+![Implementation Image 2](https://raw.githubusercontent.com/hariharan-tech/OCR_OCD/master/img/imp2.png)
 
 ## Future scope
 
